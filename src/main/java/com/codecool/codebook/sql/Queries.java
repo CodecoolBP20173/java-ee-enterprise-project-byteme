@@ -6,6 +6,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.codecool.codebook.model.Klass;
+import com.codecool.codebook.model.Message;
 import com.codecool.codebook.model.Student;
 import com.codecool.codebook.model.Workplace;
 
@@ -107,6 +108,14 @@ public class Queries {
         return null;
     }
 
+    public static List getAllMessageBetweenUsers(Long senderId, Long receiverId){
+
+        Query query = em.createQuery("SELECT s FROM Message s " +
+                "where sender_id = '" + senderId + "' and receiver_Id = '" + receiverId + "' or sender_id = '" + receiverId + "' and receiver_Id = '" + senderId + "' ");
+
+        return query.getResultList();
+    }
+
     public static Klass getStudentKlass(long Id){
         try {
             Student student = em.find(Student.class, Id);
@@ -165,6 +174,13 @@ public class Queries {
         }catch (IllegalArgumentException e){
             System.err.println("Error caught: " + e.toString() + "in addNewStudent()");
         }
+    }
+
+    public static void addNewMessage(Message message) {
+        etr.begin();
+        em.persist(message);
+        etr.commit();
+
     }
 
     public static String getPassword(String email){

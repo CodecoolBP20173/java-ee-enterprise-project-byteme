@@ -2,6 +2,8 @@ package com.codecool.codebook.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Student {
@@ -22,11 +24,12 @@ public class Student {
     @ManyToOne
     private Klass klass;
 
-    @OneToOne(mappedBy = "senderStudent")
-    private Message sentMessage;
+    @OneToMany(mappedBy = "senderStudent")
+    private Set<Message> sentMessages = new HashSet<>();
 
-    @OneToOne(mappedBy = "receiverStudent")
-    private Message receiverMessage;
+
+    @OneToMany(mappedBy = "receiverStudent")
+    private Set<Message> recievedMessages = new HashSet<>();
 
     public Student() {
     }
@@ -95,6 +98,16 @@ public class Student {
 
     public String getPassword() {
         return password;
+    }
+
+    public void addSentMessage(Message message) {
+        message.setSenderStudent(this);
+        sentMessages.add(message);
+    }
+
+    public void addReceivedMessage(Message message) {
+        message.setReceiverStudent(this);
+        recievedMessages.add(message);
     }
 
     public void setPassword(String password) {

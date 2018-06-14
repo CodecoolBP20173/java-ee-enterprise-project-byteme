@@ -8,11 +8,11 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "sender_id")
     private Student senderStudent;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "receiver_id")
     private Student receiverStudent;
 

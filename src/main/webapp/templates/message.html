@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <h1 th:text="@{'message between ' + ${student1.name} + ' and ' + ${student2.name}}"></h1>
+</head>
+<body>
+<form th:action="@{'/message/' + '?id=' + ${student2.Id}}" method="post">
+    <label>
+        Message:
+    </label>
+    <input type="text" id="message" name="message"/>
+    <br>
+    <br>
+    <button id="submit" type="submit" value="send">Send</button>
+</form>
+<br>
+<br>
+
+
+<div th:each="message : ${messages}">
+<div th:switch="${message.receiverStudent}">
+    <div th:case="${student2}">
+        <p th:text="${student1.name} + ': ' + ${message.textmessage} "></p>
+    </div>
+    <div th:case="${student1}">
+        <p th:text="${student2.name} + ': ' + ${message.textmessage} "></p>
+    </div>
+</div>
+</div>
+
+
+<a href="/">Back To Homepage</a>
+</body>
+</html>

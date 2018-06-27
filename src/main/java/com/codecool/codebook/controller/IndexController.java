@@ -31,12 +31,13 @@ public class IndexController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         List students = queries.getAllStudentInfo();
-
-        try {
-            Long id = new Long((int) session.getAttribute("userID"));
-            context.setVariable("userName", queries.getStudent(id));
-        } catch (NullPointerException e) {
-            System.err.println("Error caught: " + e.toString() + " in IndexController.doGet()");
+        if (session.getAttribute("userID") != null) {
+            try {
+                Long id = new Long((int) session.getAttribute("userID"));
+                context.setVariable("userName", queries.getStudent(id));
+            } catch (NullPointerException e) {
+                System.err.println("Error caught: " + e.toString() + " in IndexController.doGet()");
+            }
         }
         context.setVariable("students", students);
 

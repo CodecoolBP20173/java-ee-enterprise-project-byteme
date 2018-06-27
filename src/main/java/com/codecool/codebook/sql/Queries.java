@@ -2,7 +2,6 @@ package com.codecool.codebook.sql;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.codecool.codebook.model.Klass;
@@ -234,15 +233,5 @@ public class Queries {
 
         return em.find(Student.class, id);
 
-    }
-
-    /**
-     * Set the persistence-unit name for hibernate manually
-     * @param dbName: String
-     */
-    public void setEnv(String dbName){
-        emf = Persistence.createEntityManagerFactory(dbName);
-        em = emf.createEntityManager();
-        etr = em.getTransaction();
     }
 }

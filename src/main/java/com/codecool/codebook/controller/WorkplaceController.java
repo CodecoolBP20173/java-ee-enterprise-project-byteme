@@ -24,12 +24,13 @@ public class WorkplaceController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         HttpSession session = req.getSession();
-
-        try {
-            Long id = new Long((int) session.getAttribute("userID"));
-            context.setVariable("userName", queries.getStudent(id));
-        } catch (NullPointerException e) {
-            System.err.println("Error caught: " + e.toString() + " in WorkplaceController.doGet()");
+        if (session.getAttribute("userID") != null) {
+            try {
+                Long id = new Long((int) session.getAttribute("userID"));
+                context.setVariable("userName", queries.getStudent(id));
+            } catch (NullPointerException e) {
+                System.err.println("Error caught: " + e.toString() + " in WorkplaceController.doGet()");
+            }
         }
 
         context.setVariable("workplaces", queries.getAllWorkplace());
